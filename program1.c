@@ -20,8 +20,8 @@ int main(){
 		chk = check_v(a[i]);
 		if(chk==1)
 			v++;
-		if(a[i] == ' ')
-			w++;	
+		if(((a[i]<'a')||(a[i]>'z'))&&((a[i]<'A')||(a[i]>'Z')))
+			w++;
 	}
 	printf("\nThe no. of characters is %d\nThe no of vowels is %d\nThe no of white spaces is %d\n",n,v,w);
 	printf("\n\nEnter a number to terminate program\n\n");	
