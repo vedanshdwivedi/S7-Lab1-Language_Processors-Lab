@@ -12,6 +12,16 @@ int check_v(char a){
 	return chk;
 }
 
+void file_content(char *a){
+	FILE *r;
+	char ch;
+	r = fopen(a,"r");
+	while((ch=getc(r))!=EOF){
+		printf("%c",ch);
+	}
+	fclose(r);
+}
+
 void main(){
 	char arr[100][50];
 	int as[100];
@@ -23,7 +33,8 @@ void main(){
 		exit(1);
 	}
 
-
+	printf("\nCONTENT OF FILE : ");
+	file_content("test1.txt");
 	// read file and store words in an array
 	while(1){
 		char r = getc(ptr);
@@ -40,6 +51,7 @@ void main(){
 		}
 		i++;
 	}
+
 	// Now the words from the file have been stored in an array arr[], size is i
 	// For each word in arr[], perform the following check.
 	// Check if the word has a vowel in it
@@ -72,6 +84,7 @@ void main(){
 			vc++;
 		}
 	}
+	printf("\nWords with vowels are : \n");
 	// Now vow[] consists of 1 instance of word that has a vowel in it and arr[] consists of all words from file
 	// for each word in vow, check for that word in arr[]
 	for(j=0;j<vc;j++){
