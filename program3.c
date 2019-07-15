@@ -40,52 +40,50 @@ void main(){
 		}
 		i++;
 	}
-
-
-
-	// Words are stored in arr[] array, size of array is i
-	int j,chk,len,x,vc=0,nl,z;
+	// Now the words from the file have been stored in an array arr[], size is i
+	// For each word in arr[], perform the following check.
+	// Check if the word has a vowel in it
+	// if vowel exists, check whether the word exists in the vow[] array
+	// if not, then add the word to the list, otherwise, continue
+	int j,len,n,chk,m_chk,vc=0,cs;
 	char vow[100][50];
 	for(j=0;j<i;j++){
-		// Check each word for having vowel in it, if vowel is present, add it into another list
-		chk = 0;
-		len = strlen(arr[j]);
-		for(x=0;x<len && chk == 0;x++){
-			z = check_v(arr[j][x]);
-			if(z == 1)
-				chk++;
+		// For each word check if it consists of a vowel.
+		len=strlen(arr[j]);
+		chk=0;cs=1;
+		m_chk=0;
+		for(n=0;n<len;n++){
+			chk = check_v(arr[j][n]);
+			if(chk==1)
+				break;
 		}
-		if(chk>0){
-			// Vowel found, add to list
-			nl= 0;
-			z=0;
-			for(x=0;x<nl;x++){
-				if(strcmp(arr[j],vow[x]) == 0)
-					z=1;
-				if(z==1)
+		// if vowel exists, search for word in vow[] array
+		if(chk==1){
+			for(n=0;n<=vc;n++){
+				if(strcmp(arr[j],vow[n])==0)
+					m_chk=1;
+				if(m_chk==1)
 					break;
 			}
-			// if z=1, then word already exists....
-			// if z=0, then add word to list
-			if(z==0){
-				strcpy(vow[vc],arr[j]);
-				vc++;
-			}
 		}
-
-
-
-		// vow contains all words with vowel, now print and count its no of occurances and print it
-		for(j=0;j<vc;j++){
-			chk=0;
-			// word is in vow[j]
-			for(x=0;x<i;x++){
-				// checking words from all the words to count occurances
-				if(strcpy(vow[j], arr[x]) == 0)
-					chk++;
-			}
-			printf("Word - %s\t Occurances - %d\n",vow[j],chk);
+		// if word does not exists i.e., m_chk=0, add the word in the list vow[]
+		if((chk == 1) && (m_chk==0)){
+			strcpy(vow[vc],arr[j]);
+			vc++;
 		}
-	fclose(ptr);
 	}
+	// Now vow[] consists of 1 instance of word that has a vowel in it and arr[] consists of all words from file
+	// for each word in vow, check for that word in arr[]
+	for(j=0;j<vc;j++){
+		chk=0;
+		for(n=0;n<=i;n++){
+			if(strcmp(arr[n],vow[j])==0)
+				chk++;		
+		}
+		// Now we have the word and no of instances of that word.
+		printf("%s \t %d\n",vow[j],chk);
+		chk=0;
+	}
+	fclose(ptr);
 }
+
