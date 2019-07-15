@@ -30,7 +30,7 @@ void main(){
 		if(z==1)
 			v++;
 		i++;
-		if(ch==' ')
+		if(((ch<'a')||(ch>'z'))&&((ch<'A')||(ch>'Z')))
 			w++;
 		printf("%c",ch);
 		if(ch == '.')
@@ -38,6 +38,6 @@ void main(){
 	}
 	if(l==0)
 		l++;
-	printf("\nNo of vowels is %d\nNo of characters is %d\nNo of white spaces are %d\nNo of lines are %d\n",v,i,w,l);
+	printf("\nNo of vowels is %d\nNo of characters is %d\nNo of white spaces are %d\nNo of lines are %d\n",v,i,w-1,l);
 	fclose(rptr);
 }
