@@ -24,7 +24,6 @@ void file_content(char *a){
 
 void main(){
 	char arr[100][50];
-	int as[100];
 	int i=0;
 	FILE *ptr;
 	ptr = fopen("test1.txt","r");
@@ -62,7 +61,7 @@ void main(){
 	for(j=0;j<i;j++){
 		// For each word check if it consists of a vowel.
 		len=strlen(arr[j]);
-		chk=0;cs=1;
+		chk=0;
 		m_chk=0;
 		for(n=0;n<len;n++){
 			chk = check_v(arr[j][n]);
@@ -95,7 +94,6 @@ void main(){
 		}
 		// Now we have the word and no of instances of that word.
 		printf("%s \t %d\n",vow[j],chk);
-		chk=0;
 	}
 	fclose(ptr);
 }
