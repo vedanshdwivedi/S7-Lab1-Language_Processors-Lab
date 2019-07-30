@@ -16,5 +16,5 @@ NOTE : Ensure that you have a file named 'test1.txt' before executing
 NOTE : Ensure that you have a file named 'test2.txt' before executing which consists a C program
 
 ## Program 5 : program5.c
-- generate a symbol table from an assembly language program stored in a file
+- generate a symbol table from an assembly language program stored in a file using C program.
 NOTE : Ensure that you have a file named 'ass1.txt' before executing which consists a C program
