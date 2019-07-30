@@ -1,6 +1,3 @@
-// Finite Automata that identifies the keywords : if, for, while
-
-
 #include <stdbool.h> 
 #include <stdio.h> 
 #include <string.h> 
@@ -55,8 +52,28 @@ bool isKeyword(char* str)
         || !strcmp(str, "struct") || !strcmp(str, "goto")) 
         return (true); 
     return (false); 
-} 
+}
+bool isHeader(char* str) 
+{ 
+    if (!strcmp(str, "stdio.h")||!strcmp(str, "stdlib.h")||!strcmp(str, "string.h")) 
+        return (true); 
+    return (false); 
+}  
   
+
+bool isDirective(char* str) 
+{ 
+    if (!strcmp(str, "#include")||!strcmp(str, "#define")) 
+        return (true); 
+    return (false); 
+}  
+
+bool isEOL(char* str) 
+{ 
+    if (!strcmp(str, "\n")||!strcmp(str, "\0")) 
+        return (true); 
+    return (false); 
+} 
 // Returns 'true' if the string is an INTEGER. 
 bool isInteger(char* str) 
 { 
@@ -73,6 +90,8 @@ bool isInteger(char* str)
     } 
     return (true); 
 } 
+
+
   
 // Returns 'true' if the string is a REAL NUMBER. 
 bool isRealNumber(char* str) 
@@ -120,7 +139,7 @@ void parse(char* str)
   
         if (isDelimiter(str[right]) == true && left == right) { 
             if (isOperator(str[right]) == true) 
-                printf("'%c' IS AN OPERATOR\n", str[right]); 
+                printf("%c IS AN OPERATOR\n", str[right]); 
   
             right++; 
             left = right; 
@@ -129,21 +148,34 @@ void parse(char* str)
             char* subStr = subString(str, left, right - 1); 
   
             if (isKeyword(subStr) == true) 
-                printf("'%s' IS A KEYWORD\n", subStr); 
+                printf("%s IS A KEYWORD\n", subStr); 
   
             else if (isInteger(subStr) == true) 
-                printf("'%s' IS AN INTEGER\n", subStr); 
+                printf("%s IS AN INTEGER\n", subStr); 
   
             else if (isRealNumber(subStr) == true) 
-                printf("'%s' IS A REAL NUMBER\n", subStr); 
+                printf("%s IS A REAL NUMBER\n", subStr); 
+
+
+	    else if (isDirective(subStr) == true
+                     && isDelimiter(str[right - 1]) == false) 
+                printf("%s IS A Preprocessor Directive\n", subStr); 
   
+            else if (isHeader(subStr) == true
+                     && isDelimiter(str[right - 1]) == false) 
+                printf("%s IS A HEADER FILE\n", subStr); 
+
+	   else if (isEOL(subStr) == true
+                     && isDelimiter(str[right - 1]) == false) 
+                printf("\n"); 
+
             else if (validIdentifier(subStr) == true
                      && isDelimiter(str[right - 1]) == false) 
-                printf("'%s' IS A VALID IDENTIFIER\n", subStr); 
+                printf("%s IS A VALID IDENTIFIER\n", subStr); 
   
             else if (validIdentifier(subStr) == false
                      && isDelimiter(str[right - 1]) == false) 
-                printf("'%s' IS NOT A VALID IDENTIFIER\n", subStr); 
+                printf("%s IS NOT A VALID IDENTIFIER\n", subStr); 
             left = right; 
         } 
     } 
@@ -154,10 +186,18 @@ void parse(char* str)
 int main() 
 { 
      
-    char str[100] = "int a = b + 1c; "; 
-  
-    parse(str);
-  
+    char *str;
+        FILE *fptr;
+    size_t len = 0;
+    if ((fptr = fopen("program.txt", "r")) == NULL)
+    {
+        printf("Error! opening file");
+        // Program exits if file pointer returns NULL.
+        exit(1);         
+    }
+    while ((getline(&str, &len, fptr)) != -1) {
+        parse(str);
+    }
     return (0); 
 } 
 
